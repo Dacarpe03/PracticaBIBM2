@@ -88,9 +88,9 @@ def simulated_annealing(interval,
                           current_neighborhood)
         
         print(f"Iteration {i}:\n"
-              f"    Best solution: {best_solution}\n"
-              f"    Current_solution: {current_solution}\n"
-              f"    Candidate_solution: {candidate_solution}\n"
+              f"    Best solution: {round(best_solution,2)}\n"
+              f"    Current_solution: {round(current_solution,2)}\n"
+              f"    Candidate_solution: {round(candidate_solution,2)}\n"
               f"    Current_temperature: {current_temperature}\n"
               f"    Accepted solutions: {accepted_solutions}\n"
               f"    Rejected solutions: {rejected_solutions}")
@@ -152,7 +152,7 @@ def plot_solution(best_solution, current_solution, candidate_solution, neighborh
                 f(best_solution), 
                 marker='o', 
                 color='r', 
-                label="Solution")
+                label="Best solution")
     
     plt.scatter(current_solution,
                 f(current_solution), 
@@ -169,7 +169,7 @@ def plot_solution(best_solution, current_solution, candidate_solution, neighborh
     plt.plot(discretized_points, 
              function_points, 
              'g-',
-             label='f')
+             label='f(x)')
     
     plt.plot(discretized_neighborhood, 
              neighborhood_points, 
@@ -205,8 +205,8 @@ def main():
     analysis_dataframe  = pd.read_csv(FILENAME)
 
 
-    animation = False
-    statistics = True
+    animation = True
+    statistics = False
     initial_temperatures = [25, 100, 200, 500, 2500, 5000]
     neighborhood_radiuses = [1, 2, 5, 10]
     temperature_decrease = [0.8, 0.85, 0.9, 0.99]
@@ -233,6 +233,15 @@ def main():
                     if animation:
                         plot_probs(temps, probs, 5)
                         plot_probs(temps, probs, 25)
+                        
     
 if __name__ == "__main__":
-    main()
+    initial_temperature = 2500
+    temperature_decrease = 0.95
+    neighborhood_radius = 10
+    simulated_annealing(X_DOMAIN,
+                        initial_temperature,
+                        temperature_decrease,
+                        neighborhood_radius,
+                        True,
+                        False)
